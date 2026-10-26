@@ -1,11 +1,11 @@
 const { Sequelize } = require('sequelize')
+const { db: cfg } = require('../config/env')
 
-const db = new Sequelize('db_logistica', 'root','senai', {
-    host: 'localhost',
+const db = new Sequelize(cfg.name, cfg.user, cfg.pass, {
+    host: cfg.host,
+    port: cfg.port,
     dialect: 'mysql',
-    port: 3306
+    logging: false
 })
 
 module.exports = db
-
-

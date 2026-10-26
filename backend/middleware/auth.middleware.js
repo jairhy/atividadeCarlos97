@@ -1,33 +1,23 @@
-const cryptoJS = require('crypto-js')
-const CHAVE_SECRETA = 'segredo'
+const jwt = require('jsonwebtoken')
+const { jwtSecret } = require('../config/env')
 
+// Exige "Authorization: Bearer <token>" válido e não expirado (180 min)
 function authMiddleware(req, res, next) {
-    const token = req.headers['autorization']
-    console.log(token)
+    const header = req.headers.authorization || ''
+    const [tipo, token] = header.split(' ')
 
-    if (!token) {
-        return res.status(401).json({message: 'Acesso negado! Token não fornecido.'})
+    if (tipo !== 'Bearer' || !token) {
+        return res.status(401).json({ message: 'Acesso negado! Token não fornecido.' })
     }
 
     try {
-        const bytes = CryptoJS.AES.decrypt(token, CHAVE_SECRETA)
-        const dadosDescriptografados = bytes.toString(CryptoJS.enc.Utf8)
-
-        if (!dadosDescriptografados) {
-            return res.status(401).json({ message: 'Token inválido!'})
-        }
-
-        const payload = JSON.parse(dadosDescriptografados)
-
-        if (Date.now() > payload.expiraEm) {
-            return res.status(401).json({message: 'Sessão expirada! Faça login novamente.'})
-
-        }
-
-        req.usuario = payload
-        next()
+        req.usuario = jwt.verify(token, jwtSecret)
+        return next()
     } catch (err) {
-        return res.status(401),json({ message: 'Sessão expirada! faça login novamente.'})
+        const expirou = err.name === 'TokenExpiredError'
+        return res.status(401).json({
+            message: expirou ? 'Sessão expirada! Faça login novamente.' : 'Token inválido!'
+        })
     }
 }
 

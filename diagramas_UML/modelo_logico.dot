@@ -1,0 +1,19 @@
+digraph M { rankdir=LR; nodesep=0.8; ranksep=1.4; fontname="DejaVu Sans"; labelloc=t; label=<<B>Modelo Lógico - db_logistica</B>>;
+node [shape=plain fontname="DejaVu Sans" fontsize=11]; edge [fontname="DejaVu Sans" fontsize=10 arrowhead=crow arrowtail=tee dir=both];
+motoristas [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#9BC1E0" COLSPAN="2"><B>motoristas</B></TD></TR>
+<TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">codMotorista INT</TD></TR><TR><TD></TD><TD ALIGN="LEFT">nome VARCHAR(100)</TD></TR>
+<TR><TD></TD><TD ALIGN="LEFT">cnh VARCHAR(255) 🔒</TD></TR><TR><TD></TD><TD ALIGN="LEFT">cpf VARCHAR(255) 🔒</TD></TR>
+<TR><TD>UK</TD><TD ALIGN="LEFT">cpfHash CHAR(64)</TD></TR><TR><TD></TD><TD ALIGN="LEFT">telefone VARCHAR(20)</TD></TR></TABLE>>];
+cargas [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#9BC1E0" COLSPAN="2"><B>cargas</B></TD></TR>
+<TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">codCarga INT</TD></TR><TR><TD></TD><TD ALIGN="LEFT">descricao VARCHAR(100)</TD></TR>
+<TR><TD></TD><TD ALIGN="LEFT">peso DECIMAL(10,2)</TD></TR><TR><TD></TD><TD ALIGN="LEFT">volume DECIMAL(10,3)</TD></TR>
+<TR><TD>UK</TD><TD ALIGN="LEFT">codigoRastreio BIGINT</TD></TR><TR><TD>FK</TD><TD ALIGN="LEFT">codigoMotorista INT</TD></TR></TABLE>>];
+entregas [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#9BC1E0" COLSPAN="2"><B>entregas</B></TD></TR>
+<TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">codEntrega INT</TD></TR><TR><TD></TD><TD ALIGN="LEFT">cidadeDestino VARCHAR(100)</TD></TR>
+<TR><TD></TD><TD ALIGN="LEFT">status ENUM('ENTREGUE','TRANSITO')</TD></TR><TR><TD></TD><TD ALIGN="LEFT">data DATE</TD></TR><TR><TD></TD><TD ALIGN="LEFT">hora TIME</TD></TR>
+<TR><TD>FK,UK</TD><TD ALIGN="LEFT">idCarga INT</TD></TR><TR><TD>FK</TD><TD ALIGN="LEFT">idFuncionario INT</TD></TR></TABLE>>];
+funcionarios [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4"><TR><TD BGCOLOR="#9BC1E0" COLSPAN="2"><B>funcionarios</B></TD></TR>
+<TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">codFuncionario INT</TD></TR><TR><TD></TD><TD ALIGN="LEFT">nome VARCHAR(100)</TD></TR>
+<TR><TD>UK</TD><TD ALIGN="LEFT">email VARCHAR(100)</TD></TR><TR><TD></TD><TD ALIGN="LEFT">senha VARCHAR(100) 🔒 (bcrypt)</TD></TR></TABLE>>];
+motoristas -> cargas [label="1 : N"]; cargas -> entregas [label="1 : 0..1" arrowhead=teeodot]; funcionarios -> entregas [label="1 : N"];
+}

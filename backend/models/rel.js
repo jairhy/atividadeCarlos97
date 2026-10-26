@@ -3,43 +3,16 @@ const Motorista = require('./Motorista')
 const Funcionario = require('./Funcionario')
 const Entrega = require('./Entrega')
 
+// Motorista 1 --- N Carga  (não apaga motorista que possui cargas)
+Motorista.hasMany(Carga, { foreignKey: { name: 'codigoMotorista', allowNull: false }, as: 'cargas', onDelete: 'RESTRICT', onUpdate: 'CASCADE' })
+Carga.belongsTo(Motorista, { foreignKey: 'codigoMotorista', as: 'motorista' })
 
-Carga.hasMany(Entrega, {
-    foreignKey: 'idCarga',
-    as: 'cargas',
-    onDelete: 'CASCADE',
-})
+// Carga 1 --- 0..1 Entrega
+Carga.hasOne(Entrega, { foreignKey: { name: 'idCarga', allowNull: false }, as: 'entrega', onDelete: 'RESTRICT', onUpdate: 'CASCADE' })
+Entrega.belongsTo(Carga, { foreignKey: 'idCarga', as: 'carga' })
 
-Entrega.belongsTo(Carga, {
-    foreignKey: 'idCarga',
-    as: 'cargas',
-    allowNull: false
-})
+// Funcionario 1 --- N Entrega (responsável pelo registro)
+Funcionario.hasMany(Entrega, { foreignKey: { name: 'idFuncionario', allowNull: false }, as: 'entregas', onDelete: 'RESTRICT', onUpdate: 'CASCADE' })
+Entrega.belongsTo(Funcionario, { foreignKey: 'idFuncionario', as: 'funcionario' })
 
-Motorista.hasMany(Entrega, {
-    foreignKey: 'idMotorista',
-    as: 'motoristas',
-    onDelete: 'CASCADE'
-})
-
-Entrega.belongsTo(Motorista, {
-    foreignKey: 'idMotorista',
-    as: 'motoristas',
-    allowNull: false
-})
-
-Funcionario.hasMany(Entrega, {
-    foreignKey: 'idFuncionario',
-    as: 'funcionarios',
-    onDelete: 'CASCADE'
-})
-
-Entrega.belongsTo(Funcionario, {
-    foreignKey: 'idFuncionario',
-    as: 'funcionarios',
-    allowNull: false
-})
-
-
-
-module.exports = { Carga, Motorista, Funcionario, Entrega  }
+module.exports = { Carga, Motorista, Funcionario, Entrega }

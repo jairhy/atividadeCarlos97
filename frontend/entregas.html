@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entregas — Logística Express</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="conteudo">
+  <h1>Entregas</h1>
+  <div id="mensagem" role="alert" aria-live="polite" class="msg"></div>
+
+  <section class="card" aria-labelledby="t-form">
+    <h2 id="t-form">Nova entrega</h2>
+    <form id="form" novalidate>
+      <input type="hidden" id="cod">
+      <div class="form-grid">
+        <div><label for="idCarga">Carga</label><select id="idCarga" required><option value="">Selecione…</option></select></div>
+        <div><label for="cidadeDestino">Cidade destino</label><input id="cidadeDestino" maxlength="100" required></div>
+        <div><label for="status">Status</label>
+          <select id="status" required><option value="TRANSITO">TRANSITO</option><option value="ENTREGUE">ENTREGUE</option></select></div>
+        <div><label for="data">Data</label><input id="data" type="date" required></div>
+        <div><label for="hora">Hora</label><input id="hora" type="time" required></div>
+      </div>
+      <div class="acoes">
+        <button class="btn" type="submit" id="btn-salvar">Cadastrar</button>
+        <button class="btn sec" type="button" id="btn-cancelar" hidden>Cancelar edição</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="t-lista">
+    <h2 id="t-lista">Entregas registradas</h2>
+    <form id="form-filtro" class="form-grid" novalidate>
+      <div><label for="f-ordem">Ordenar por data</label>
+        <select id="f-ordem"><option value="desc">Mais recentes primeiro</option><option value="asc">Mais antigas primeiro</option></select></div>
+      <div><label for="f-ini">Data inicial</label><input id="f-ini" type="date"></div>
+      <div><label for="f-fim">Data final</label><input id="f-fim" type="date"></div>
+      <div><label for="f-status">Status</label>
+        <select id="f-status"><option value="">Todos</option><option value="TRANSITO">TRANSITO</option><option value="ENTREGUE">ENTREGUE</option></select></div>
+      <div><label for="f-cidade">Cidade</label><input id="f-cidade" maxlength="100"></div>
+      <div class="acoes" style="margin:0"><button class="btn" type="submit">Filtrar</button><button class="btn sec" type="button" id="btn-limpar">Limpar</button></div>
+    </form>
+    <div id="tabela" class="tabela-wrap" style="margin-top:1rem"></div>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/entregas.js"></script>
+</body>
+</html>

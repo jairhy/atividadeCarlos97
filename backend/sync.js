@@ -1,16 +1,23 @@
+// Cria o banco (se não existir) e as tabelas. ATENÇÃO: force:true recria tudo.
+const mysql = require('mysql2/promise')
+const { db: cfg } = require('./config/env')
 const conn = require('./db/conn')
-const { Carga, Motorista, Entrega, Funcionario } = require('./models/rel')
+require('./models/rel')
 
-async function dataBaseSync(){
+async function dataBaseSync() {
     try {
-        await conn.sync({force: true})
-        console.log('sincronizadas as tabelas!')
+        const raw = await mysql.createConnection({ host: cfg.host, port: cfg.port, user: cfg.user, password: cfg.pass })
+        await raw.query(`CREATE DATABASE IF NOT EXISTS \`${cfg.name}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`)
+        await raw.end()
+        await conn.sync({ force: true })
+        console.log('Tabelas sincronizadas!')
     } catch (err) {
         console.error('Erro de sincronização!', err)
-    }finally{
+        process.exitCode = 1
+    } finally {
         await conn.close()
-        console.log('fechando o banco de dados')
     }
 }
 
-dataBaseSync()
+if (require.main === module) dataBaseSync()
+module.exports = dataBaseSync

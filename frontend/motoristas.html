@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motoristas — Logística Express</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="conteudo">
+  <h1>Motoristas</h1>
+  <div id="mensagem" role="alert" aria-live="polite" class="msg"></div>
+
+  <section class="card" aria-labelledby="t-form">
+    <h2 id="t-form">Novo motorista</h2>
+    <form id="form" novalidate>
+      <input type="hidden" id="cod">
+      <div class="form-grid">
+        <div><label for="nome">Nome</label><input id="nome" maxlength="100" required></div>
+        <div><label for="cnh">CNH (11 dígitos)</label><input id="cnh" inputmode="numeric" maxlength="11" required></div>
+        <div><label for="cpf">CPF</label><input id="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required></div>
+        <div><label for="telefone">Telefone (com DDD)</label><input id="telefone" inputmode="tel" maxlength="15" placeholder="(47) 99999-9999" required></div>
+      </div>
+      <div class="acoes">
+        <button class="btn" type="submit" id="btn-salvar">Cadastrar</button>
+        <button class="btn sec" type="button" id="btn-cancelar" hidden>Cancelar edição</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="t-lista">
+    <h2 id="t-lista">Motoristas cadastrados</h2>
+    <form id="form-busca" role="search" class="form-grid" novalidate>
+      <div><label for="busca">Buscar por nome</label><input id="busca" type="search" maxlength="100" placeholder="Digite parte do nome"></div>
+      <div class="acoes" style="margin:0"><button class="btn" type="submit">Buscar</button><button class="btn sec" type="button" id="btn-limpar">Limpar</button></div>
+    </form>
+    <div id="tabela" class="tabela-wrap" style="margin-top:1rem"></div>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/motoristas.js"></script>
+</body>
+</html>
