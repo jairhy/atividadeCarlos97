@@ -14,7 +14,7 @@ docs/           DOCUMENTACAO.md (RF, RNF, RN, infraestrutura, rotas, testes)
 ```bash
 cd backend
 npm install
-cp .env.example .env        # ajuste DB_USER / DB_PASS
+# ajuste usuário/senha do banco em config/config.js
 npm run sync && npm run seed
 npm start                   # http://localhost:3000
 ```

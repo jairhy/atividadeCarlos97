@@ -1,7 +1,7 @@
 // Criptografia reversível (AES-256-GCM) para CNH e CPF,
 // e HMAC determinístico para garantir unicidade do CPF sem expô-lo.
 const crypto = require('crypto')
-const { chaveCripto } = require('../config/env')
+const { chaveCripto } = require('../config/config')
 
 const KEY = crypto.scryptSync(chaveCripto, 'logistica-express-salt', 32)
 

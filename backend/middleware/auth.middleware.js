@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('../config/env')
+const { jwtSecret } = require('../config/config')
 
 // Exige "Authorization: Bearer <token>" válido e não expirado (180 min)
 function authMiddleware(req, res, next) {

@@ -66,7 +66,7 @@ Documentação da refatoração do sistema corporativo interno (acesso restrito 
 | Banco de dados | **MySQL 8.x** (compatível; testado em **MariaDB 10.11.14**) — banco `db_logistica`, charset `utf8mb4` |
 | Linguagem | **JavaScript / Node.js v22.22.2** (npm 10.9.7) — mínimo recomendado: Node 18+ |
 | Framework back-end | Express **5.3.0**, Sequelize **6.37.8**, mysql2 **3.24.6** |
-| Segurança | bcryptjs 2.4.3, jsonwebtoken 9.0.3, helmet 8.3.0, express-rate-limit 7.5.1, dotenv 16.6.1 |
+| Segurança | bcryptjs 2.4.3, jsonwebtoken 9.0.3, helmet 8.3.0, express-rate-limit 7.5.1 |
 | Servidor web local | **Node.js + Express** em `http://localhost:3000` (API em `/api`) |
 | Frontend | **HTML5 + CSS3 + JavaScript (ES2020) puro**, servido como arquivos estáticos pelo próprio Express |
 | Ferramenta de teste | **Jest 29.7.0 + Supertest 7.3.1** (testes de integração da API). Opcional: Postman/Insomnia para testes manuais |
@@ -248,7 +248,7 @@ mysql -u root -p < database/script_db_logistica.sql
 #    ...OU pelo Sequelize (cria o banco/tabelas e depois insere os 3 registros iniciais)
 cd backend
 npm install
-cp .env.example .env     # ajuste usuário/senha do MySQL e troque os segredos
+# ajuste usuário/senha do MySQL e os segredos em config/config.js
 npm run sync && npm run seed
 
 # 2. Servidor (API + frontend)
@@ -258,7 +258,7 @@ npm start                # http://localhost:3000
 #    carlos@logisticaexpress.com / Senha@123
 ```
 
-> Use **uma** das duas formas de criar o banco (script SQL **ou** `sync + seed`). O script SQL usa a `CHAVE_CRIPTO` do `.env.example`; se você trocar a chave no `.env`, use `npm run sync && npm run seed` para que CNH/CPF dos registros iniciais sejam legíveis.
+> Use **uma** das duas formas de criar o banco (script SQL **ou** `sync + seed`). O script SQL usa a `chaveCripto` de `config/config.js`; se você trocar a chave, use `npm run sync && npm run seed` para que CNH/CPF dos registros iniciais sejam legíveis.
 
 ---
 
@@ -268,7 +268,7 @@ npm start                # http://localhost:3000
 |---------------------|----------|
 | `index.js` e 3 controllers (`Entrega`, `Funcionarios`, `Motorista`) **vazios**; sem rotas, sem frontend | Implementados (rotas, controllers, app Express, frontend completo) |
 | `auth.middleware.js`: `cryptoJS` vs `CryptoJS` (ReferenceError), `res.status(401),json(...)` (erro de sintaxe lógica), header `autorization` (typo) e **sem tempo de expiração real** | Reescrito com **JWT** (`Authorization: Bearer`), expiração de **180 min** e tratamento correto de erros |
-| Chave secreta `'segredo'` fixa no código | Segredos em variáveis de ambiente (`.env`) |
+| Chave secreta `'segredo'` fixa no código | Segredos centralizados em `backend/config/config.js` (sem `.env`) |
 | Senha/CPF/CNH sem criptografia nos models/controllers (o controller criptografava o rastreio e **gravava o valor em claro**) | Senha com **bcrypt**; CNH/CPF com **AES-256-GCM**; rastreio gravado como número |
 | `codigoRastreio` como `INT` (11 dígitos **estouram** o INT) | `BIGINT` + validação de 11 dígitos + `UNIQUE` |
 | `valores.codigoRastreio.length` em número (falha) e validação exigia só peso/volume/rastreio/motorista (esquecia descrição) | Validação completa e tipada em todos os campos |

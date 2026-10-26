@@ -1,12 +1,13 @@
 // Teste de integração da API - usa um banco separado (db_logistica_test)
-process.env.DB_NAME = 'db_logistica_test'
-process.env.NODE_ENV = 'test'
+// Usa um banco separado para não apagar os dados de db_logistica
+global.__TESTE__ = true
+require('../config/config').db.name = 'db_logistica_test'
 
 const request = require('supertest')
 const mysql = require('mysql2/promise')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const config = require('../config/env')
+const config = require('../config/config')
 const app = require('../app')
 const db = require('../db/conn')
 const { Funcionario, Motorista } = require('../models/rel')

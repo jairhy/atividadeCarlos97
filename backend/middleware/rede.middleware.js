@@ -1,5 +1,5 @@
 // Restringe o acesso à rede interna (loopback + faixas privadas RFC 1918 / ULA IPv6)
-const { redeInterna } = require('../config/env')
+const { redeInterna } = require('../config/config')
 
 function ipInterno(ip = '') {
     const v4 = ip.replace(/^::ffff:/, '')

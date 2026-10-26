@@ -4,8 +4,8 @@
 --
 -- * Senhas de funcionários: hash bcrypt (senha de teste: Senha@123)
 -- * CNH e CPF dos motoristas: AES-256-GCM (formato iv:tag:dados em base64).
---   Os valores abaixo foram gerados com a CHAVE_CRIPTO do arquivo
---   backend/.env.example. Se você trocar a chave, rode "npm run seed"
+--   Os valores abaixo foram gerados com a chaveCripto do arquivo
+--   backend/config/config.js. Se você trocar a chave, rode "npm run seed"
 --   (após "npm run sync") para regerar os registros iniciais.
 -- =====================================================================
 
@@ -71,14 +71,14 @@ CREATE TABLE entregas (
 -- Registros iniciais (3 por tabela)
 -- ---------------------------------------------------------------------
 INSERT INTO funcionarios (nome, email, senha) VALUES
-    ('Carlos Almeida', 'carlos@logisticaexpress.com', '$2a$10$RZ8dxYm2AwvSxuwUEgbpG.51RPhx4Z4TRsfnixvbrlGF5MXRxJEKq'),
-    ('Mariana Souza', 'mariana@logisticaexpress.com', '$2a$10$RZ8dxYm2AwvSxuwUEgbpG.51RPhx4Z4TRsfnixvbrlGF5MXRxJEKq'),
-    ('Roberto Lima', 'roberto@logisticaexpress.com', '$2a$10$RZ8dxYm2AwvSxuwUEgbpG.51RPhx4Z4TRsfnixvbrlGF5MXRxJEKq');
+    ('Carlos Almeida', 'carlos@logisticaexpress.com', '$2a$10$4pjlScJFmZTEvZ0dcTPIAOjwGXKe4vRkG95vnEetJfOIK9BgAHE.q'),
+    ('Mariana Souza', 'mariana@logisticaexpress.com', '$2a$10$4pjlScJFmZTEvZ0dcTPIAOjwGXKe4vRkG95vnEetJfOIK9BgAHE.q'),
+    ('Roberto Lima', 'roberto@logisticaexpress.com', '$2a$10$4pjlScJFmZTEvZ0dcTPIAOjwGXKe4vRkG95vnEetJfOIK9BgAHE.q');
 
 INSERT INTO motoristas (nome, cnh, cpf, cpfHash, telefone) VALUES
-    ('João Pereira', 'oIapm/THScsXpRno:BxzWYcwJSMiMOcKEA2Y6QQ==:sfme3O+jp1pX0uo=', 'f1rv7HY4wVMFxcf6:17yUrlw4EfzcTYJoZ13uPA==:DxCiRPmzVJ2N0Gk=', 'e6ac22e33c189f49b5626a765ede02c653e0c4ccef4aaca2221a24f5cc3d4154', '47991112233'),
-    ('Ana Beatriz Costa', 's3pY4pBZZqzQTCh8:8/KKMrvuTADpin+aaDAVIQ==:EAmN4SKfZP2GyuU=', 'mkG7rAFgpKlafKjG:HwznfzSmbj3yH6d/uOptQQ==:4P+Tafp54PbkgWA=', '7f8901d08f32c8a23dbc964b1cf6e1fe24649fbf123c5136f9e1065666752098', '47992223344'),
-    ('Pedro Henrique Santos', 'dE1qUIdVRR/SV/FC:SODtXLV5WYBJj6Ln0urwlw==:iM/rK3kfDUqjm8Q=', 'rb0A80Yw9wYRh7WZ:l3NgsgkuNpi0obS2lBChdw==:lE2X2IKMyYzAC9g=', 'd35ea4af5e7252c9ae9143687ce750257e432818fe9cf6bfc6f8756327a9c2c5', '47993334455');
+    ('João Pereira', 'irfCRO1KOe49Ch4w:2PimSHDKav//uO6ZLJp7zA==:pdQyAf+gLvUkBzw=', '5BZ2EyaL4jPMf5gn:M9wVnNbmLab8AUl41VnFYQ==:uEJvthBlG+rEwqs=', 'e57a8afc41a0821ea75fa51ce52fd62dcc42c8134fea8fdfe4895f4ec1f78d75', '47991112233'),
+    ('Ana Beatriz Costa', 'nJyl8ewO9XuEvJWV:wNsFpdgpRYJTEqnHRN07Fw==:z/UjJsHWterCeEY=', '3Ci3YDCk/kgHgy3O:g5n/HpyygPuY4xpwPGKjRQ==:HZZIYfimW8IK4CU=', '820fca8b1b4ae4c920f09f24ae5475dceb1739655a169ec308bfd03e6398d6e7', '47992223344'),
+    ('Pedro Henrique Santos', 'hE/7VuoPuxmH/roX:evxY/7NXi08THXTi9IVxQQ==:hOAOZ1vV/nFeAnw=', 'codn2nAcZm54zMdt:vCd2kYjAaapJCW4ftBsimA==:iuRTdtLmn9ygKuE=', 'd6950a79dfcba648d281831142840c0bfc9541d832ec0d49a8cc57a967d84c47', '47993334455');
 
 INSERT INTO cargas (descricao, peso, volume, codigoRastreio, codigoMotorista) VALUES
     ('Caixas de eletrônicos', 350.50, 2.400, 10000000001, 1),

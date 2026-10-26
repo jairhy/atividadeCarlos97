@@ -1,6 +1,6 @@
 // Cria o banco (se não existir) e as tabelas. ATENÇÃO: force:true recria tudo.
 const mysql = require('mysql2/promise')
-const { db: cfg } = require('./config/env')
+const { db: cfg } = require('./config/config')
 const conn = require('./db/conn')
 require('./models/rel')
 

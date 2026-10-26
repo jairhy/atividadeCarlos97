@@ -13,7 +13,7 @@ app.use(helmet())                             // cabeçalhos de segurança (CSP,
 app.use(express.json({ limit: '100kb' }))
 
 // Limita tentativas de login (força bruta)
-if (process.env.NODE_ENV !== 'test') {
+if (!global.__TESTE__) {
     app.use('/api/auth/login', rateLimit({
         windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: true, legacyHeaders: false,
         message: { message: 'Muitas tentativas de login. Aguarde alguns minutos.' }

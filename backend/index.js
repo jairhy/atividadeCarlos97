@@ -1,7 +1,7 @@
 const app = require('./app')
 const db = require('./db/conn')
 require('./models/rel')
-const { port, host } = require('./config/env')
+const { port, host } = require('./config/config')
 
 async function iniciar() {
     try {

@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Funcionario = require('../models/Funcionario')
-const { jwtSecret, sessaoMinutos } = require('../config/env')
+const { jwtSecret, sessaoMinutos } = require('../config/config')
 const { emailValido } = require('../utils/validators')
 
 // hash fictício para igualar o tempo de resposta quando o e-mail não existe
